@@ -4,31 +4,16 @@ const fs = require('fs')
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {})
-    */
     module.exports.copyFiles()
 
     await queryInterface.bulkInsert('Users',
       [
-        { firstName: 'Customer 1', lastName: 'Fake 1', email: 'customer1@customer.com', password: bcrypt.hashSync('secret', salt), phone: '+3466677888', address: 'Fake street 123', postalCode: '41010', userType: 'customer', avatar: process.env.AVATARS_FOLDER + '/maleAvatar.png' },
-        { firstName: 'Restaurant Owner 1', lastName: 'Fake 1', email: 'owner1@owner.com', password: bcrypt.hashSync('secret', salt), phone: '+3466677888', address: 'Fake street 123', postalCode: '41001', userType: 'owner', avatar: process.env.AVATARS_FOLDER + '/femaleAvatar.png' }
+        { firstName: 'Customer 1', lastName: 'Fake 1', email: 'customer1@customer.com', password: bcrypt.hashSync('secret', salt), phone: '+3466677888', address: 'Fake street 123', postalCode: '41010', userType: 'customer', avatar: process.env.AVATARS_FOLDER + '/maleAvatar.png', createdAt: new Date(), updatedAt: new Date() },
+        { firstName: 'Restaurant Owner 1', lastName: 'Fake 1', email: 'owner1@owner.com', password: bcrypt.hashSync('secret', salt), phone: '+3466677888', address: 'Fake street 123', postalCode: '41001', userType: 'owner', avatar: process.env.AVATARS_FOLDER + '/femaleAvatar.png', createdAt: new Date(), updatedAt: new Date() }
       ], {})
   },
 
   down: async (queryInterface, Sequelize) => {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {})
-     */
     const { sequelize } = queryInterface
     try {
       await sequelize.transaction(async (transaction) => {
@@ -47,7 +32,6 @@ module.exports = {
     if (!fs.existsSync(destinationDir)) {
       fs.mkdirSync(destinationDir, { recursive: true })
     }
-
     fs.copyFile(originDir + 'maleAvatar.png', destinationDir + 'maleAvatar.png', (err) => {
       if (err) throw err
     })

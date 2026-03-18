@@ -8,7 +8,7 @@ const getApp = async () => {
   if (!testServer) {
     ({ server: testServer, app: testApp } = await initializeServer())
   }
-  return testServer
+  return testApp
 }
 
 const shutdownApp = async () => {
